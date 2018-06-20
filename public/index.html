@@ -9,9 +9,38 @@
   <link rel="stylesheet" href="/styles.css">
 </head>
 <body>
-  <h1>Socket.io Test</h1>
+    <div id="mario-chat">
+        <h2>Socket Chat</h2>
+        <div id="chat-window">
+            <div id="output"></div>
+        </div>
+        <input id="handle" type="text" placeholder="Handle" />
+        <input id="message" type="text" placeholder="Message" />
+        <button id="send">Send</button>
+    </div>
   
-  <script> const socket = io.connect('http://localhost:3000')
+  <script> 
+  const socket = io.connect('http://localhost:3000');
+
+  let message = document.getElementById('message');
+   let   handle = document.getElementById('handle');
+    let  btn = document.getElementById('send');
+    let  output = document.getElementById('output');
+
+  // Emit event
+
+  btn.addEventListener('click', () => {
+    socket.emit('chat', {
+      message: message.value,
+      handle: handle.value
+    })
+  });
+
+  // Listen
+  socket.on('chat', (data) => {
+    output.innerHTML += `<p>${data.handle}: ${data.message}</p>`
+  })
+
   </script>
 </body>
 </html>
