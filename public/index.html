@@ -45,6 +45,7 @@
 
     // Listen
     socket.on('chat', (data) => {
+      feedback.innerHTML = '';
       output.innerHTML += `<p>${data.handle}: ${data.message}</p>`
     })
 
